@@ -1,10 +1,12 @@
 package com.example.salhuman.security.services;
 
 
+import com.example.salhuman.models.Employe;
 import com.example.salhuman.security.dto.ReqRes;
 import com.example.salhuman.security.entities.User;
 import com.example.salhuman.security.repositories.UserRepository;
 
+import com.example.salhuman.services.EmployeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,6 +28,8 @@ public class UserServiceImp {
     private AuthenticationManager authenticationManager;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    EmployeService employeService;
 
 
         public ReqRes createUser(String email, String password, String role, String name) {
@@ -64,20 +68,12 @@ public class UserServiceImp {
             User userResult = userRepository.save(user);
             if (userResult.getId()>0) {
 
-//                if ("USER".equals(userResult.getRole())) {
-//                    // Create an Employe object
-//                    Employe employe = new Employe();
-//                    employe.setNom(userResult.getName());
-//                    employe.setPrenom("");  // Assuming you have a way to get the prenom, set it accordingly
-//                    employe.setUser(userResult);
-//
-//                    // Save the Employe entity
-//                    employeService.saveEmployee(employe);
-//
-//                    // Update the User entity with the associated Employe
-//                    userResult.setEmploye(employe);
-//                    userRepository.save(userResult);
-//                }
+                if ("USER".equals(userResult.getRole())) {
+                    Employe employe = new Employe();
+                    employe.setNom(userResult.getName());
+                    employe.setUser(userResult);
+                    employeService.saveEmploye(employe);
+                }
 
                 resp.setUser((userResult));
                 resp.setMessage("User Saved Successfully");

@@ -1,6 +1,7 @@
 package com.example.salhuman.security.entities;
 
 
+import com.example.salhuman.models.Employe;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,6 +30,9 @@ public class User implements UserDetails
     private String name;
     private String password;
     private String role;
+    @OneToOne
+    @JoinColumn(name = "employe_id")
+    private Employe employe;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
