@@ -3,6 +3,7 @@ package com.example.salhuman.security.services;
 
 import com.example.salhuman.models.Employe;
 import com.example.salhuman.security.dto.ReqRes;
+import com.example.salhuman.security.dto.employeReqRes;
 import com.example.salhuman.security.entities.User;
 import com.example.salhuman.security.repositories.UserRepository;
 
@@ -67,14 +68,6 @@ public class UserServiceImp {
             user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
             User userResult = userRepository.save(user);
             if (userResult.getId()>0) {
-
-                if ("USER".equals(userResult.getRole())) {
-                    Employe employe = new Employe();
-                    employe.setNom(userResult.getName());
-                    employe.setUser(userResult);
-                    employeService.saveEmploye(employe);
-                }
-
                 resp.setUser((userResult));
                 resp.setMessage("User Saved Successfully");
                 resp.setStatusCode(200);
