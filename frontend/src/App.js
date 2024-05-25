@@ -12,6 +12,9 @@ import ProfilePage from './components/userspage/ProfilePage';
 import AddEmployee from './components/Employee/AddEmployee';
 import EmployeManagementPage from './components/Employee/EmployeesManagement';
 import UpdateEmployee from './components/Employee/UpdateEmployee';
+import DemanderCongePage from './components/Conge/DemanderConge';
+import CongeListPage from './components/Conge/EmployeConge';
+import ManagerCongesPage from './components/Manager/CongeList';
 
 
 
@@ -36,6 +39,13 @@ function App() {
                 <Route path="/admin/add-employee" element={<AddEmployee />} />
                 <Route path="/admin/employe-management" element={<EmployeManagementPage />} />
                 <Route path="/update-employe/:employeId" element={< UpdateEmployee />} />
+                <Route path="/managerCongeList" element={< ManagerCongesPage />} />
+              </>
+            )}
+            {UserService.userOnly() &&(
+              <>
+              <Route path="/demanderConge" element={< DemanderCongePage />} />
+              <Route path="/CongeList" element={< CongeListPage />} />
               </>
             )}
             <Route path="*" element={<Navigate to="/login" />} />‰
