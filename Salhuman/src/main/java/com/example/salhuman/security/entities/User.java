@@ -63,6 +63,12 @@ public class User implements UserDetails
     public boolean isEnabled() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        // Avoid calling employe.toString() to prevent infinite recursion
+        return "User{id=" + id + ", username='" + email + "'}";
+    }
 }
 
 //public class User
