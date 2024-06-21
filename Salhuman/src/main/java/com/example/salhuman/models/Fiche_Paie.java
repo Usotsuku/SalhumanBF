@@ -1,14 +1,14 @@
 package com.example.salhuman.models;
 
-import jakarta.persistence.*;
 import lombok.*;
+import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-@Setter
-@Getter
+
 @Entity
-@Table
+@Table(name = "fiche_paie")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,15 +16,30 @@ import java.util.List;
 public class Fiche_Paie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long FicheId;
-    private String periode;
-    private float montant_brut;
-    private float montant_net;
+    private Long ficheId;
+
+    @Column(nullable = false)
+    private LocalDate periode;
+
+    @Column(nullable = false)
+    private float montantBrut;
+
+    @Column(nullable = false)
+    private float montantNet;
+
+    @Column(nullable = false)
     private float amo;
+
+    @Column(nullable = false)
     private float cnss;
+
+    @Column(nullable = false)
     private float impotSurRevenu;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employe_id", nullable = false)
     private Employe employe;
-    @OneToMany(mappedBy = "fiche_paie", fetch = FetchType.EAGER)
-    private List<Element_Salaire> Elements_Salaires = new ArrayList<>();
+
+    @OneToMany(mappedBy = "fichePaie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Element_Salaire> elementsSalaires = new ArrayList<>();
 }

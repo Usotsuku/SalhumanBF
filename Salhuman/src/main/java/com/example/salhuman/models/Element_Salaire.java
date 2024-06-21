@@ -14,9 +14,13 @@ import lombok.*;
 public class Element_Salaire {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ElementId;
+    private Long elementId;
+
     private String type;
+
     private float montant;
+
     @ManyToOne
-    private Fiche_Paie fiche_paie;
+    @JoinColumn(name = "fiche_paie_id", nullable = false)
+    private Fiche_Paie fichePaie;
 }
