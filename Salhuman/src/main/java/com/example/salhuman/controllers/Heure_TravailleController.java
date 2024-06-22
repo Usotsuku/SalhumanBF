@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/heures")
 public class Heure_TravailleController {
 
     @Autowired
@@ -26,13 +26,18 @@ public class Heure_TravailleController {
         return ResponseEntity.ok(employes);
     }
 
-    @PostMapping("/heuresTravaille")
+    @PostMapping
     public ResponseEntity<Heure_Travaille> saveHeureTravaille(@RequestBody Heure_Travaille heureTravaille) {
+        Employe employe = employeService.getEmployeById(heureTravaille.getEmploye().getId()).getEmploye();
+        if (employe == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        heureTravaille.setEmploye(employe);
         Heure_Travaille savedHeureTravaille = heureTravailleService.saveHeureTravaille(heureTravaille);
         return ResponseEntity.ok(savedHeureTravaille);
     }
 
-    @DeleteMapping("/heuresTravaille/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHeureTravaille(@PathVariable Long id) {
         Heure_Travaille heureTravaille = heureTravailleService.getHeureTravailleById(id);
         if (heureTravaille == null) {
@@ -42,25 +47,23 @@ public class Heure_TravailleController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/heuresTravail/{employeId}")
+    @GetMapping("/{employeId}")
     public ResponseEntity<List<Heure_Travaille>> listerHeuresTravailEmploye(@PathVariable Long employeId) {
         Employe employe = employeService.getEmployeById(employeId).getEmploye();
         if (employe == null) {
             return ResponseEntity.notFound().build();
         }
-
         List<Heure_Travaille> heuresTravail = heureTravailleService.getHeuresTravailByEmploye(employeId);
         return ResponseEntity.ok(heuresTravail);
     }
 
-    @PutMapping("/heuresTravaille/{heureTravailleId}/approuver")
+    @PutMapping("/{heureTravailleId}/approuver")
     public ResponseEntity<Heure_Travaille> approuverHeureTravaille(@PathVariable Long heureTravailleId) {
         Heure_Travaille heureTravaille = heureTravailleService.getHeureTravailleById(heureTravailleId);
         if (heureTravaille == null) {
             return ResponseEntity.notFound().build();
         }
-
-        heureTravaille.setStatut("APPROVED");
+        heureTravaille.setStatut(Heure_Travaille.Statut.APPROUVE);
         Heure_Travaille updatedHeureTravaille = heureTravailleService.saveHeureTravaille(heureTravaille);
         return ResponseEntity.ok(updatedHeureTravaille);
     }

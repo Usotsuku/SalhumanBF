@@ -1,5 +1,6 @@
 package com.example.salhuman.models;
 
+import com.example.salhuman.enums.TypeElementSalaire;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,7 +17,8 @@ public class Element_Salaire {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long elementId;
 
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private TypeElementSalaire type;
 
     private float montant;
 

@@ -1,5 +1,8 @@
 package com.example.salhuman.controllers;
 
+import com.example.salhuman.dto.FichePaieDTO;
+
+import com.example.salhuman.models.Element_Salaire;
 
 import com.example.salhuman.models.Fiche_Paie;
 import com.example.salhuman.services.FichePaieService;
@@ -10,28 +13,40 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/fichePaie")
-
 public class FichePaieController {
+
     @Autowired
     private FichePaieService fichePaieService;
 
     @PostMapping("/calculer")
-    public ResponseEntity<Fiche_Paie> calculerFichePaie(@RequestBody Fiche_Paie fichePaie) {
+    public ResponseEntity<FichePaieDTO> calculerFichePaie(@RequestBody Fiche_Paie fichePaie) {
         Fiche_Paie fichePaieCalculée = fichePaieService.calculerFichePaie(fichePaie);
-        return ResponseEntity.ok(fichePaieCalculée);
+        return ResponseEntity.ok(fichePaieService.convertToDTO(fichePaieCalculée));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Fiche_Paie> getFichePaie(@PathVariable Long id) {
+    public ResponseEntity<FichePaieDTO> getFichePaie(@PathVariable Long id) {
         Fiche_Paie fichePaie = fichePaieService.getFichePaie(id);
         if (fichePaie == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(fichePaie);
+        return ResponseEntity.ok(fichePaieService.convertToDTO(fichePaie));
+    }
 
+    @PostMapping("/{id}/addElement")
+    public ResponseEntity<FichePaieDTO> addElementSalaire(@PathVariable Long id, @RequestBody Element_Salaire elementSalaire) {
+        Fiche_Paie fichePaie = fichePaieService.getFichePaie(id);
+        if (fichePaie == null) {
+            return ResponseEntity.notFound().build();
+        }
+        fichePaie.getElementsSalaires().add(elementSalaire);
+        elementSalaire.setFichePaie(fichePaie);
+        fichePaieService.calculerFichePaie(fichePaie);
+        return ResponseEntity.ok(fichePaieService.convertToDTO(fichePaie));
     }
 
     @GetMapping("/pdf/{id}")

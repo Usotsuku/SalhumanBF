@@ -45,4 +45,9 @@ public class Employe {
         // Avoid calling user.toString() to prevent infinite recursion
         return "Employe{id=" + employeId + ", name='" + nom + "'}";
     }
+
+    public Long getId() {
+        return employeId;
+    }
+
 }

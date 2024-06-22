@@ -4,16 +4,18 @@ import com.example.salhuman.models.Employe;
 import com.example.salhuman.models.Heure_Travaille;
 import com.example.salhuman.repositories.EmployeRepository;
 import com.example.salhuman.repositories.HeureTravailleRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class HeureTravailleService {
+
     @Autowired
     private HeureTravailleRepository heureTravailleRepository;
 
@@ -45,15 +47,14 @@ public class HeureTravailleService {
     }
 
     public List<Heure_Travaille> getHeuresTravailByEmploye(Long employeId) {
-        Optional<Employe> employeOptional = employeRepository.findById(employeId);
-        return employeOptional.map(heureTravailleRepository::findByEmploye).orElse(null);
+        return heureTravailleRepository.findByEmployeId(employeId);
     }
 
     @Transactional
     public void approuverHeureTravaille(Long heureTravailleId) {
         Heure_Travaille heureTravaille = getHeureTravailleById(heureTravailleId);
         if (heureTravaille != null) {
-            heureTravaille.setStatut("APPROVED");
+            heureTravaille.setStatut(Heure_Travaille.Statut.APPROUVE);
             saveHeureTravaille(heureTravaille);
         }
     }
