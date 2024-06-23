@@ -1,6 +1,7 @@
 package com.example.salhuman.security.controllers;
 
 import com.example.salhuman.security.dto.ReqRes;
+import com.example.salhuman.security.dto.UserReqRes;
 import com.example.salhuman.security.entities.User;
 import com.example.salhuman.security.services.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class UserRestController {
     }
 
     @GetMapping("/admin/get-all-users")
-    public ResponseEntity<ReqRes> getAllUsers(){
+    public ResponseEntity<UserReqRes> getAllUsers(){
         return ResponseEntity.ok(userServiceImp.getAllUsers());
 
     }

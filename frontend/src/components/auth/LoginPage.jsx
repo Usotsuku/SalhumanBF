@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import UserService from "../service/UserService";
+import './LoginRegister.css';
+import { FaUser,FaLock ,FaEnvelope } from 'react-icons/fa';
 
 
 function LoginPage(){
@@ -18,7 +20,8 @@ const handleSubmit = async (e) => {
         if (userData.token) {
             localStorage.setItem('token', userData.token)
             localStorage.setItem('role', userData.role)
-            navigate('/profile')
+                navigate('/admin/user-management');
+
         }else{
             setError(userData.message)
         }
@@ -33,21 +36,28 @@ const handleSubmit = async (e) => {
 }
 
 
-    return(
-        <div className="auth-container">
-            <h2>Login</h2>
-            {error && <p className="error-message">{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>Email: </label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                </div>
-                <div className="form-group">
-                    <label>Password: </label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                </div>
-                <button type="submit">Login</button>
-            </form>
+    return(   
+        <div> 
+            <h1 className="title"> Welcome To SALHUMAN</h1>
+        <div className='wrapper'>
+            <div className="form-box login">
+                <form onSubmit={handleSubmit}> 
+                    <h1>Login</h1>
+                    <div className="input-box">
+                         <input type="email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} required />
+                         <FaEnvelope className='icon'/>
+                    </div>
+                    <div className="input-box">
+                        <input type="password"
+                                placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} required />
+                        <FaLock className='icon'/>
+                    </div>
+
+                    <button type="submit">Login</button>
+
+                </form>
+            </div>
+        </div>
         </div>
     )
 

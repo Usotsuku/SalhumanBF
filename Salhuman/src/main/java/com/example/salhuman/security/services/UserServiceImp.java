@@ -2,8 +2,7 @@ package com.example.salhuman.security.services;
 
 
 import com.example.salhuman.models.Employe;
-import com.example.salhuman.security.dto.ReqRes;
-import com.example.salhuman.security.dto.employeReqRes;
+import com.example.salhuman.security.dto.*;
 import com.example.salhuman.security.entities.User;
 import com.example.salhuman.security.repositories.UserRepository;
 
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImp {
@@ -132,25 +132,36 @@ public class UserServiceImp {
     }
 
 
-    public ReqRes getAllUsers() {
-        ReqRes reqRes = new ReqRes();
+    public UserReqRes getAllUsers() {
+        UserReqRes userReqRes = new UserReqRes();
+
+
 
         try {
             List<User> result = userRepository.findAll();
             if (!result.isEmpty()) {
-                reqRes.setUserList(result);
-                reqRes.setStatusCode(200);
-                reqRes.setMessage("Successful");
+                List<UserResponse> userResponses = result.stream()
+                                .map(user -> {
+                                    UserResponse dto = new UserResponse();
+                                    dto.setId(user.getId());
+                                    dto.setEmail(user.getEmail());
+                                    dto.setRole(user.getRole());
+                                    dto.setName(user.getName());
+                                    dto.setPassword(user.getPassword());
+                                    return dto;
+                                }).collect(Collectors.toList());
+                userReqRes.setUserDataList(userResponses);
+                userReqRes.setStatusCode(200);
+                userReqRes.setMessage("Successful");
             } else {
-                reqRes.setStatusCode(404);
-                reqRes.setMessage("No users found");
+                userReqRes.setStatusCode(404);
+                userReqRes.setMessage("No users found");
             }
-            return reqRes;
         } catch (Exception e) {
-            reqRes.setStatusCode(500);
-            reqRes.setMessage("Error occurred: " + e.getMessage());
-            return reqRes;
+            userReqRes.setStatusCode(500);
+            userReqRes.setMessage("Error occurred: " + e.getMessage());
         }
+        return  userReqRes;
     }
 
 

@@ -24,8 +24,8 @@ public class Heure_Travaille {
     private int nb_heures;
     @ManyToOne
     private Employe employe;
+    private String Statut;
 
-    public void setStatut(String approuved) {
-    }
+
 }
 
