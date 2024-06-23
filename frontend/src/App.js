@@ -20,6 +20,7 @@ import HoursWorked from './components/Manager/HoursWorked';
 import AdminLayout from './layouts/AdminLayout';
 import UserLayout from './layouts/UserLayout';
 import PrivateRoute from './layouts/PrivateRoute';
+import PayslipPage from './components/Manager/payslip';
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
                 <Route path="/demanderConge" element={< DemanderCongePage />} />
               <Route path="/CongeList" element={< CongeListPage />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/payslip" element={<PayslipPage />} />
         </Routes>
       </BrowserRouter>
     </>
