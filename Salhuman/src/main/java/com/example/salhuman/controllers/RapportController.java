@@ -73,7 +73,7 @@ public class RapportController {
             byte[] report = reportService.generatePdfReport(fichesPaie);
 
 
-            ByteArrayResource resource = new ByteArrayResource(report);//
+            ByteArrayResource resource = new ByteArrayResource(report);
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=rapport.pdf");
