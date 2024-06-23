@@ -108,6 +108,11 @@ class UserService{
         return role === 'USER'
     }
 
+    static userOnly(){
+        return this.isAuthenticated() && this.isUser();
+    }
+
+
     static adminOnly(){
         return this.isAuthenticated() && this.isAdmin();
     }

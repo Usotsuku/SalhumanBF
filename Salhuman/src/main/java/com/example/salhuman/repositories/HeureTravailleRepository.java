@@ -11,5 +11,7 @@ public interface HeureTravailleRepository extends JpaRepository<Heure_Travaille,
 
 
     List<Heure_Travaille> findByEmploye(Employe employe);
+
+    List<Heure_Travaille> findByEmployeId(Long employeId);
 }
 

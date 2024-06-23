@@ -5,7 +5,11 @@ import { Link } from 'react-router-dom';
 
 
 function ProfilePage() {
-    const [profileInfo, setProfileInfo] = useState({});
+    const [profileInfo, setProfileInfo] = useState({
+        name: '',
+        email: '',
+        role: '',
+    });
 
     useEffect(() => {
         fetchProfileInfo();

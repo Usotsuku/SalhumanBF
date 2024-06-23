@@ -39,4 +39,15 @@ public class Employe {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Override
+    public String toString() {
+        // Avoid calling user.toString() to prevent infinite recursion
+        return "Employe{id=" + employeId + ", name='" + nom + "'}";
+    }
+
+    public Long getId() {
+        return employeId;
+    }
+
 }
