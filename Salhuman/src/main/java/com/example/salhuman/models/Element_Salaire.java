@@ -1,5 +1,6 @@
 package com.example.salhuman.models;
 
+import com.example.salhuman.enums.TypeElementSalaire;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,9 +15,14 @@ import lombok.*;
 public class Element_Salaire {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ElementId;
-    private String type;
+    private Long elementId;
+
+    @Enumerated(EnumType.STRING)
+    private TypeElementSalaire type;
+
     private float montant;
+
     @ManyToOne
-    private Fiche_Paie fiche_paie;
+    @JoinColumn(name = "fiche_paie_id", nullable = false)
+    private Fiche_Paie fichePaie;
 }

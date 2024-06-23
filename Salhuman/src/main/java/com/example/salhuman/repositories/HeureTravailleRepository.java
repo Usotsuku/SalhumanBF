@@ -13,8 +13,14 @@ import java.util.Optional;
 public interface HeureTravailleRepository extends JpaRepository<Heure_Travaille, Long> {
 
 
+
     List<Heure_Travaille> findByEmploye(Optional<Employe> employe);
     @Query("SELECT h FROM Heure_Travaille h WHERE h.employe.employeId = :employeId AND h.date BETWEEN :startDate AND :endDate")
     List<Heure_Travaille> findByEmployeIdAndDateBetween(Long employeId, Date startDate, Date endDate);
+
+    List<Heure_Travaille> findByEmploye(Employe employe);
+
+    List<Heure_Travaille> findByEmployeId(Long employeId);
+
 }
 

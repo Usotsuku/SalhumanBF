@@ -5,27 +5,36 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+
 @Setter
 @Getter
 @Entity
-@Table
-@Data
+@Table(name = "heures_travaillees")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class Heure_Travaille {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long HeureId;
+    private Long heureId; // Nom de champ ajusté pour correspondre aux conventions Java
+
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd") // Format de date attendu
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
-    private String type;
+
+    private String type; // Peut être "travail", "absence", etc.
+
     private int nb_heures;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employe_id", nullable = false)
     private Employe employe;
     private String Statut;
 
 
+    public enum Statut {
+        EN_ATTENTE,
+        APPROUVE,
+        REJETE
+    }
 }
-

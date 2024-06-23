@@ -13,7 +13,7 @@ public class SalhumanApplication {
         SpringApplication.run(SalhumanApplication.class, args);
     }
 
-//    @Bean
+    @Bean
     public CommandLineRunner commandLineRunner(UserServiceImp userServiceImp){
         return  args -> {
             userServiceImp.createUser("admin@gmail.com","123","ADMIN","admin");
