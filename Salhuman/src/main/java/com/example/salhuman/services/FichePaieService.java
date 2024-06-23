@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -104,7 +105,7 @@ public class FichePaieService {
     public com.example.salhuman.dto.FichePaieDTO convertToDTO(Fiche_Paie fichePaie) {
         return com.example.salhuman.dto.FichePaieDTO.builder()
                 .ficheId(fichePaie.getFicheId())
-                .periode(fichePaie.getPeriode())
+                .periode(LocalDate.parse(fichePaie.getPeriode()))
                 .montantBrut(fichePaie.getMontantBrut())
                 .montantNet(fichePaie.getMontantNet())
                 .amo(fichePaie.getAmo())

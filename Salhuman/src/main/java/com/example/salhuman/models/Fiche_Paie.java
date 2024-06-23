@@ -19,7 +19,9 @@ public class Fiche_Paie {
     private Long ficheId;
 
     @Column(nullable = false)
-    private LocalDate periode;
+    private String periode;
+
+    private String departement;
 
     @Column(nullable = false)
     private float montantBrut;
