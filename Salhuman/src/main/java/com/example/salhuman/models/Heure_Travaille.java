@@ -29,13 +29,8 @@ public class Heure_Travaille {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employe_id", nullable = false)
     private Employe employe;
+    private String Statut;
 
-    @Enumerated(EnumType.STRING)
-    private Statut statut = Statut.EN_ATTENTE; // Définir le statut par défaut
-
-    public void setStatut(Statut statut) {
-        this.statut = statut;
-    }
 
     public enum Statut {
         EN_ATTENTE,

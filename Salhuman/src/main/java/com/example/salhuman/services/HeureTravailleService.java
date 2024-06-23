@@ -5,10 +5,16 @@ import com.example.salhuman.models.Heure_Travaille;
 import com.example.salhuman.repositories.EmployeRepository;
 import com.example.salhuman.repositories.HeureTravailleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +31,17 @@ public class HeureTravailleService {
     public Heure_Travaille saveHeureTravaille(Heure_Travaille heureTravaille) {
         return heureTravailleRepository.save(heureTravaille);
     }
+
+
+    public List<Heure_Travaille> getHeuresByEmployeAndDateRange(Long employeId, Date startDate, Date endDate) {
+        return heureTravailleRepository.findByEmployeIdAndDateBetween(employeId, startDate, endDate);
+    }
+
+    public List<Heure_Travaille> getHeuresByEmploye(Long employeId) {
+        Optional<Employe> employe = employeRepository.findById(employeId);;
+        return heureTravailleRepository.findByEmploye(employe);
+    }
+}
 
     public Heure_Travaille updateHeureTravaille(Heure_Travaille heureTravaille) {
         return heureTravailleRepository.save(heureTravaille);
@@ -59,3 +76,4 @@ public class HeureTravailleService {
         }
     }
 }
+

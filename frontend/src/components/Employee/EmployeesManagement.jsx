@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from '@mui/material';
 import EmployeeService from '../service/EmployeeService';
+import Sidebar from '../common/Sidebar';
 
 function EmployeManagementPage() {
   const [employes, setEmployes] = useState([]);
@@ -39,39 +41,67 @@ function EmployeManagementPage() {
   };
 
   return (
-    <div className="user-management-container">
-      <h2>Employes Management Page</h2>
-      <button className='reg-button'>
-        <Link to="/admin/add-employee">Add Employee</Link>
-      </button>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nom</th>
-            <th>Prenom</th>
-            <th>Departement</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {employes.map(employe => (
-            <tr key={employe.employeId}>
-              <td>{employe.employeId}</td>
-              <td>{employe.nom}</td>
-              <td>{employe.prenom}</td>
-              <td>{employe.departement}</td>
-              <td>
-                <button className='delete-button' onClick={() => deleteEmploye(employe.employeId)}>Delete</button>
-                <button>
-                  <Link to={`/update-employe/${employe.employeId}`}>Update</Link>
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <Box sx={{ display: "flex", backgroundColor: "cyan", minHeight: "100vh" }}>
+      <Sidebar />
+      <Box sx={{ flexGrow: 1, p: 3 }}>
+        <Typography variant="h4" gutterBottom>
+          Employees Management Page
+        </Typography>
+        <Button variant="contained" color="primary" component={Link} to="/admin/add-employee" sx={{ mb: 2 }}>
+          Add Employee
+        </Button>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Surname</TableCell>
+                <TableCell>Department</TableCell>
+                <TableCell>Salary</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {employes.map(employe => (
+                <TableRow key={employe.employeId}>
+                  <TableCell>{employe.employeId}</TableCell>
+                  <TableCell>{employe.nom}</TableCell>
+                  <TableCell>{employe.prenom}</TableCell>
+                  <TableCell>{employe.departement}</TableCell>
+                  <TableCell>{employe.salaire}</TableCell>
+                  <TableCell>
+                    <Button 
+                      variant="contained" 
+                      color="secondary" 
+                      onClick={() => deleteEmploye(employe.employeId)}
+                      sx={{ mr: 1 }}
+                    >
+                      Delete
+                    </Button>
+                    <Button 
+                      variant="contained" 
+                      component={Link} 
+                      to={`/update-employe/${employe.employeId}`}
+                      sx={{ mr: 1 }}
+                    >
+                      Update
+                    </Button>
+                    <Button 
+                      variant="contained" 
+                      component={Link} 
+                      to={`/hours-worked/${employe.employeId}`}
+                    >
+                      View Hours Worked
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+    </Box>
   );
 }
 

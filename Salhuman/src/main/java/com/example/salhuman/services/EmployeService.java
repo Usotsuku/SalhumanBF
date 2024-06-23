@@ -181,13 +181,6 @@ public class EmployeService {
 
 
 
-
-
-    public void demanderConge(Conge conge) {
-        congeRepository.save(conge);
-    }
-
-
     public Fiche_Paie getLatestfichpaie(Employe employe) {
 
         List<Fiche_Paie> fiches = employe.getFiches();
@@ -203,20 +196,5 @@ public class EmployeService {
     }
 
 
-    @Autowired
-    private HeureTravailleRepository heureTravailRepository;
 
-
-    public List<Heure_Travaille> getHeuresTravailByEmploye(Employe employe) {
-
-        return heureTravailRepository.findByEmploye(employe);
-    }
-    @Transactional
-    public void approuverConge(Conge conge) {
-        conge.setStatuts("APPROUVED");
-        congeRepository.save(conge);
-    }
-    public Conge getDemandeCongeById(Long congeId) {
-        return congeRepository.findById(congeId).orElse(null);
-    }
 }
